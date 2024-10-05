@@ -13,5 +13,6 @@ void motion_chaining();
 void combining_movements();
 void interfered_example();
 void auton_bl();
+void auton_br();
 
 void default_constants();

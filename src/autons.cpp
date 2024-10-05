@@ -234,80 +234,61 @@ void interfered_example() {
 
 void auton_br(){
   //back out
-  chassis.pid_drive_set(-96_in, 30, true);
-  chassis.pid_wait_until(6_in);
-  chassis.pid_speed_max_set(DRIVE_SPEED);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_drive_set(-27_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
   chassis.pid_wait();
+
   //pick up mogo
   Piston1.set(true);
-  //back out a little mpre
-  chassis.pid_drive_set(-10_in,DRIVE_SPEED);
-  //rotate left 90 deg
-  chassis.pid_turn_set(-90_deg, TURN_SPEED);
+  
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
   chassis.pid_wait();
-  //drive forward
-  chassis.pid_drive_set(30_in,DRIVE_SPEED,true);
-  chassis.pid_wait_quick_chain();
-  //drive forward while intaking
+  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
+  //load
   Motor1.move_velocity(600);
   Motor2.move_velocity(-600);
-  chassis.pid_drive_set(10_in,DRIVE_SPEED);
-  chassis.pid_wait();
-  Motor1.move_velocity(0);
-  Motor2.move_velocity(0);
-  //turn left 80 deg
-
-  //drive forward
-
-  //pick up bot ring
-
-  //turn left ? deg
-
-  //pick up other ring
+  pros::delay(500);
 }
 
 void auton_bl(){
   //back out
-  chassis.pid_drive_set(-96_in, 30, true);
-  chassis.pid_wait_until(6_in);
-  chassis.pid_speed_max_set(DRIVE_SPEED);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_drive_set(-27_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
   chassis.pid_wait();
 
   //pick up mogo
   Piston1.set(true);
   
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
+  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
   //load
   Motor1.move_velocity(600);
   Motor2.move_velocity(-600);
+  pros::delay(500);
 
-  //rotate 180 degrees right
-  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_turn_set(45_deg, TURN_SPEED);
   chassis.pid_wait();
-  Motor1.move(0);
-  Motor2.move(0);
-
-  //drop mogo
+  chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
+  pros::delay(500);
   Piston1.set(false);
-
-  //rotate 90 degrees left
-  chassis.pid_turn_set(-90_deg, TURN_SPEED);
+  chassis.pid_drive_set(10_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
   chassis.pid_wait();
 
-  //back out further
+  chassis.pid_turn_set(-30_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, SWING_SPEED, 45);
+  chassis.pid_wait();
+  chassis.pid_swing_set(ez::LEFT_SWING, -180_deg, SWING_SPEED, 55);
+  chassis.pid_wait();
+
+  // chassis.pid_drive_set(-26_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  // chassis.pid_wait();
+
+  // chassis.pid_drive_set(-2_in, 60, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  // chassis.pid_wait();
   
-  //pick up mogo
-  Piston1.set(true);
-  
-  //rotate so parallel with rings 
-  chassis.pid_turn_set(-35_deg,TURN_SPEED);
-  chassis.pid_wait();
-  //drive to rings
-  chassis.pid_drive_set(57_in,DRIVE_SPEED,false);
-  chassis.pid_wait();
-  //pick up rings (figure out how to do so isnt wrong color)
-  Motor1.move_velocity(600);
-  Motor2.move_velocity(-600);
-  //pick up rings etc..
-  chassis.pid_drive_set(12_in,DRIVE_SPEED);
-  chassis.pid_wait();
+  // Piston1.set(true);
 }
