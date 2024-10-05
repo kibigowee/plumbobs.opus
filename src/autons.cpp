@@ -234,61 +234,136 @@ void interfered_example() {
 
 void auton_br(){
   //back out
-  chassis.pid_drive_set(-27_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
   chassis.pid_wait();
 
   //pick up mogo
   Piston1.set(true);
-  
-  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  chassis.pid_wait();
-  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  chassis.pid_wait();
-  //load
+  //load rings
+  pros::delay(500);
   Motor1.move_velocity(600);
   Motor2.move_velocity(-600);
   pros::delay(500);
+  Motor1.move_velocity(0);
+  Motor2.move_velocity(0);
+  
+  //back out a little more
+  chassis.pid_drive_set(-7_in, DRIVE_SPEED);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
+
+  //rotate to the right
+  chassis.pid_turn_set(-90_deg,TURN_SPEED);
+  chassis.pid_wait();
+
+  //drive while intaking 
+  chassis.pid_drive_set(18_in, DRIVE_SPEED);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  Motor1.move_velocity(600);
+  Motor2.move_velocity(-600);
+  chassis.pid_wait();
+
+  //point to left
+  chassis.pid_turn_set(180_deg,TURN_SPEED);
+  chassis.pid_wait();
+
+  //drive forward while intaking, picking up the bottom ring at the top center
+  chassis.pid_drive_set(16_in, DRIVE_SPEED);
+  Motor1.move_velocity(600);
+  Motor2.move_velocity(-600);
+  chassis.pid_wait();
+
+  //back out
+  chassis.pid_drive_set(-7,DRIVE_SPEED);
+  chassis.pid_wait();
+  chassis.pid_turn_set(225_deg,TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(5,DRIVE_SPEED);
+  Motor1.move_velocity(600);
+  Motor2.move_velocity(-600);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-5,DRIVE_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(5,DRIVE_SPEED);
+  chassis.pid_wait();
+
+  //DROP THE MOGO
+  pros::delay(500);
+  Piston1.set(false);
+
+  //Move Mogo forward and move back
+  chassis.pid_drive_set(-24,DRIVE_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(20,10);
+  chassis.pid_wait();
+  chassis.pid_turn_set(90_deg,TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(20,10);
+  Motor2.move_velocity(-100);
+  pros::delay(500);
+  Motor2.move_velocity(0);
+
+
+
+  
+  // chassis.pid_drive_set(-6_in,DRIVE_SPEED);
 }
 
 void auton_bl(){
   //back out
-  chassis.pid_drive_set(-27_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
   chassis.pid_wait();
 
   //pick up mogo
   Piston1.set(true);
-  
-  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  chassis.pid_wait();
-  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  chassis.pid_wait();
-  //load
+  //load preloaded ring
   Motor1.move_velocity(600);
   Motor2.move_velocity(-600);
   pros::delay(500);
+  Motor1.move_velocity(0);
+  Motor2.move_velocity(0);
 
-  chassis.pid_turn_set(45_deg, TURN_SPEED);
+  //goes a little further back and turns to face ring
+  chassis.pid_drive_set(-10_in, DRIVE_SPEED);
   chassis.pid_wait();
-  chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
   chassis.pid_wait();
-  pros::delay(500);
+
+  //intake while driving to the rings
+  chassis.pid_drive_set(20_in, DRIVE_SPEED);
+  Motor1.move_velocity(600);
+  Motor2.move_velocity(-600);
+  pros::delay(1500);
+  Motor1.move_velocity(0);
+  Motor2.move_velocity(0);
+  chassis.pid_wait();
+
+  //backs out a bit to drop mogo
+  chassis.pid_drive_set(-5_in, DRIVE_SPEED);
+  chassis.pid_wait();
+  pros::delay(300);
+  //drops the mogo
   Piston1.set(false);
-  chassis.pid_drive_set(10_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  //moves forward and leaves mogo behind
+  chassis.pid_drive_set(5_in, DRIVE_SPEED,true);
   chassis.pid_wait();
-
-  chassis.pid_turn_set(-30_deg, TURN_SPEED);
+  //turns to face other mogo
+  chassis.pid_turn_set(0,TURN_SPEED);
   chassis.pid_wait();
-
-  chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, SWING_SPEED, 45);
+  //pick up other mogo
+  chassis.pid_drive_set(-15_in,80);
   chassis.pid_wait();
-  chassis.pid_swing_set(ez::LEFT_SWING, -180_deg, SWING_SPEED, 55);
+  Piston1.set(true);
+  pros::delay(200);
+  //loads mogo with rings
+  Motor1.move_velocity(600);
+  Motor2.move_velocity(-600);
+  //drives forward
+  chassis.pid_drive_set(22_in,DRIVE_SPEED);
   chassis.pid_wait();
-
-  // chassis.pid_drive_set(-26_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  // chassis.pid_wait();
-
-  // chassis.pid_drive_set(-2_in, 60, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
-  // chassis.pid_wait();
-  
-  // Piston1.set(true);
+  //turns over and crashes into pole to (hopefully) acquire AWP
+  chassis.pid_turn_set(-90,TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(30_in,DRIVE_SPEED,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(3_in,60,true);
+  chassis.pid_wait();
 }

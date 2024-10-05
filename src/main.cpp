@@ -16,8 +16,7 @@ ez::Drive chassis(
     600);   // Wheel RPM
 
 bool bPiston = false;
-bool auto_outtake = true;
-bool auto_outtaking = false;
+bool toggleExtraRing = false;
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -44,7 +43,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      Auton("Blue Left corner", auton_bl),
+      // Auton("Blue Left corner", auton_bl),
       Auton("Blue right corner",auton_br)
       // Auton("Example Drive\n\nDrive forward and come back.", drive_example),
       // Auton("Example Turn\n\nTurn 3 times.", turn_example),
@@ -171,17 +170,20 @@ void opcontrol() {
       Motor2.move_velocity(0);
     }
 
-    if(auto_outtake&&!auto_outtaking){
-      if(optical.get_rgb().blue > 200 && optical.get_rgb().blue > optical.get_rgb().red){
-        auto_outtaking = true;
-      }
-    }
-
     if(master.get_digital_new_press(DIGITAL_L1)) {
       bPiston = !bPiston;
       Piston1.set(bPiston);
     }
     
+    if(master.get_digital_new_press(DIGITAL_UP)){
+      toggleExtraRing=!toggleExtraRing;
+      if (toggleExtraRing){
+        extra_ring_motor.move_absolute(125,60);
+      } else {
+        extra_ring_motor.move_absolute(-125,60);
+      }
+    }
+
     
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
