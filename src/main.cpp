@@ -8,8 +8,8 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {15, 3, -4},     // Left Chassis Ports (negative port will reverse it!)
-    {-13, 2, -5},  // Right Chassis Ports (negative port will reverse it!)
+    {21, 5, -4},     // Left Chassis Ports (negative port will reverse it!)
+    {1, -3, -13},  // Right Chassis Ports (negative port will reverse it!)
 
     16,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -17,6 +17,7 @@ ez::Drive chassis(
 
 bool bPiston = false;
 bool toggleExtraRing = false;
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -43,8 +44,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      // Auton("Blue Left corner", auton_bl),
-      Auton("Blue right corner",auton_br)
+      Auton("Blue right corner",auton_bl)
       // Auton("Example Drive\n\nDrive forward and come back.", drive_example),
       // Auton("Example Turn\n\nTurn 3 times.", turn_example),
       // Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
@@ -175,15 +175,16 @@ void opcontrol() {
       Piston1.set(bPiston);
     }
     
-    if(master.get_digital_new_press(DIGITAL_UP)){
+    if(master.get_digital_new_press(DIGITAL_L1)){
       toggleExtraRing=!toggleExtraRing;
-      if (toggleExtraRing){
-        extra_ring_motor.move_absolute(125,60);
-      } else {
-        extra_ring_motor.move_absolute(-125,60);
-      }
     }
 
+    if (toggleExtraRing){
+      extra_ring_motor.move_absolute(1000,100);
+    } else {
+      extra_ring_motor.move_absolute(0,100);
+    }
+    
     
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME

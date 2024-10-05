@@ -324,7 +324,7 @@ void auton_bl(){
   //goes a little further back and turns to face ring
   chassis.pid_drive_set(-10_in, DRIVE_SPEED);
   chassis.pid_wait();
-  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_turn_set(-90_deg, TURN_SPEED);
   chassis.pid_wait();
 
   //intake while driving to the rings
@@ -359,11 +359,73 @@ void auton_bl(){
   //drives forward
   chassis.pid_drive_set(22_in,DRIVE_SPEED);
   chassis.pid_wait();
+  
+  // //back out
+  // chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  // chassis.pid_wait();
+
+  // //pick up mogo
+  // Piston1.set(true);
+  // //load preloaded ring
+  // Motor1.move_velocity(600);
+  // Motor2.move_velocity(-600);
+  // pros::delay(500);
+  // Motor1.move_velocity(0);
+  // Motor2.move_velocity(0);
+
+  // //goes a little further back and turns to face ring
+  // chassis.pid_drive_set(-10_in, DRIVE_SPEED);
+  // chassis.pid_wait();
+  // chassis.pid_turn_set(90_deg, TURN_SPEED);
+  // chassis.pid_wait();
+
+  // //intake while driving to the rings
+  // chassis.pid_drive_set(20_in, DRIVE_SPEED);
+  // Motor1.move_velocity(600);
+  // Motor2.move_velocity(-600);
+  // pros::delay(1500);
+  // Motor1.move_velocity(0);
+  // Motor2.move_velocity(0);
+  // chassis.pid_wait();
+
+  // //backs out a bit to drop mogo
+  // chassis.pid_drive_set(-5_in, DRIVE_SPEED);
+  // chassis.pid_wait();
+  // pros::delay(300);
+  // //drops the mogo
+  // Piston1.set(false);
+  // //moves forward and leaves mogo behind
+  // chassis.pid_drive_set(5_in, DRIVE_SPEED,true);
+  // chassis.pid_wait();
+  // //turns to face other mogo
+  // chassis.pid_turn_set(0,TURN_SPEED);
+  // chassis.pid_wait();
+  // //pick up other mogo
+  // chassis.pid_drive_set(-15_in,80);
+  // chassis.pid_wait();
+  // Piston1.set(true);
+  // pros::delay(200);
+  // //loads mogo with rings
+  // Motor1.move_velocity(600);
+  // Motor2.move_velocity(-600);
+  // //drives forward
+  // chassis.pid_drive_set(22_in,DRIVE_SPEED);
+  // chassis.pid_wait();
+  // //turns over and crashes into pole to (hopefully) acquire AWP
+  // chassis.pid_turn_set(-90,TURN_SPEED);
+  // chassis.pid_wait();
+  // chassis.pid_drive_set(30_in,DRIVE_SPEED,true);
+  // chassis.pid_wait();
+  // chassis.pid_drive_set(3_in,60,true);
+  // chassis.pid_wait();
+}
+
+void auton_rl(){
   //turns over and crashes into pole to (hopefully) acquire AWP
-  chassis.pid_turn_set(-90,TURN_SPEED);
-  chassis.pid_wait();
-  chassis.pid_drive_set(30_in,DRIVE_SPEED,true);
-  chassis.pid_wait();
-  chassis.pid_drive_set(3_in,60,true);
-  chassis.pid_wait();
+  // chassis.pid_turn_set(-90,TURN_SPEED);
+  // chassis.pid_wait();
+  // chassis.pid_drive_set(30_in,DRIVE_SPEED,true);
+  // chassis.pid_wait();
+  // chassis.pid_drive_set(3_in,60,true);
+  // chassis.pid_wait();
 }

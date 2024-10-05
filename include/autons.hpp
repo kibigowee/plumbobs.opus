@@ -14,5 +14,6 @@ void combining_movements();
 void interfered_example();
 void auton_bl();
 void auton_br();
+void auton_rl();
 
 void default_constants();
